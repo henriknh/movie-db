@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -15,24 +14,21 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    route: state => route => {
-      return `${
-        state.base
-      }${route}?query=big&opening-date=1980-01-01;1990-01-01&api-key=${
-        store.state.key
-      }`;
-    }
-  },
-  actions: {
-    doit: state => {
-      axios
-        .get("/user")
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+    generateUrl: state => (route, params = {}) => {
+      // Create base url
+      let url = `${state.base}${route}?`;
+
+      // Add optional parameters
+      for (let key of Object.keys(params)) {
+        url += `${key}=${params[key]}&`;
+      }
+
+      // Add auth token
+      url += `api-key=${store.state.key}`;
+
+      console.log(`Url generated: ${url}`);
+
+      return url;
     }
   }
 });
