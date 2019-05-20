@@ -24,7 +24,7 @@ export default {
     Thumb
   },
   mounted() {
-    this.$store.dispatch("retrieve");
+    this.$store.dispatch("reset");
   }
 };
 </script>
