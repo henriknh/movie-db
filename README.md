@@ -1,5 +1,6 @@
-<<<<<<< HEAD
-# axis-communications
+# Movie database
+
+Mini project for job interview at Axis Communications. New Your Times open API is used to fetch review data for movies.
 
 ## Project setup
 ```
@@ -25,9 +26,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
-# movies-db
->>>>>>> b3641c4aecbc286f7c93589c9a9b3ba2c6e6e2a9
