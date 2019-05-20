@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 import api from "@/stores/api";
+import { LoadingProgrammatic as Loading } from "buefy/dist/components/loading";
 
 Vue.use(Vuex);
 
@@ -13,35 +13,50 @@ const store = new Vuex.Store({
   mutations: {
     prevPagination(state) {
       state.pagination--;
+      store.dispatch("retrieve");
     },
     nextPagination(state) {
       state.pagination++;
+      store.dispatch("retrieve");
     }
   },
   actions: {
     reset: state => {
       state.pagination = 0;
-      state.reviews = [];
       store.dispatch("retrieve");
     },
     retrieve: () => {
-      const url = api.getters.generateUrl("reviews/search.json", {
-        offset: store.state.pagination
+      const loadingComponent = Loading.open({
+        container: null
       });
 
-      axios
-        .get(url)
-        .then(function(response) {
-          let reviews = response.data.results;
+      let params = {
+        offset: store.state.pagination
+      };
+
+      api
+        .dispatch({
+          type: "query",
+          URI: "reviews/search.json",
+          params
+        })
+        .then(data => {
+          store.state.reviews = [];
+
+          let reviews = data.results;
 
           for (let [i, review] of reviews.entries()) {
             // Add an unique id to each review
-            review.id = i;
+            // Make sure id is correct even for page 2+
+            review.id = store.state.pagination * 20 + i;
             store.state.reviews.push(review);
           }
         })
-        .catch(function(error) {
+        .catch(error => {
           console.error(error);
+        })
+        .finally(() => {
+          loadingComponent.close();
         });
     }
   }

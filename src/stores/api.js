@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
+import { NotificationProgrammatic as Notification } from "buefy/dist/components/notification";
 
 Vue.use(Vuex);
 
@@ -8,19 +10,14 @@ const store = new Vuex.Store({
     base: "https://api.nytimes.com/svc/movies/v2/",
     key: "rUiJZePIf4TiG4lZnuGEJ2CGoNLkOpCb"
   },
-  mutations: {
-    increment(state) {
-      state.count++;
-    }
-  },
-  getters: {
-    generateUrl: state => (route, params = {}) => {
+  actions: {
+    query({ commit, state }, data) {
       // Create base url
-      let url = `${state.base}${route}?`;
+      let url = `${state.base}${data.URI}?`;
 
       // Add optional parameters
-      for (let key of Object.keys(params)) {
-        url += `${key}=${params[key]}&`;
+      for (let key of Object.keys(data.params)) {
+        url += `${key}=${data.params[key]}&`;
       }
 
       // Add auth token
@@ -28,7 +25,27 @@ const store = new Vuex.Store({
 
       console.log(`Url generated: ${url}`);
 
-      return url;
+      // Do request
+      return axios
+        .get(url)
+        .then(response => {
+          return response.data;
+        })
+        .catch(error => {
+          if (error.response) {
+            Notification.open({
+              duration: 5000,
+              message: `Error ${error.response.status}: ${
+                error.response.data.fault.faultstring
+              }`,
+              position: "is-bottom-right",
+              type: "is-danger",
+              hasIcon: true
+            });
+          } else {
+            throw error;
+          }
+        });
     }
   }
 });
