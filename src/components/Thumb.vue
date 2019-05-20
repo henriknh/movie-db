@@ -35,9 +35,8 @@ export default {
 
 <style lang="scss" scoped>
 .thumb {
-  max-width: 200px;
-
   img {
+    max-width: 200px;
     height: 200px;
   }
 }

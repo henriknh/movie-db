@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import api from "@/stores/api";
+import search from "@/stores/search";
 import { LoadingProgrammatic as Loading } from "buefy/dist/components/loading";
 
 Vue.use(Vuex);
@@ -21,18 +22,23 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    reset: state => {
+    reset: (state, options) => {
       state.pagination = 0;
+      if (!options || options.searchReset) search.commit("reset");
       store.dispatch("retrieve");
     },
     retrieve: () => {
+      const tarElem = document.getElementsByClassName("reviews-list")[0];
       const loadingComponent = Loading.open({
-        container: null
+        container: tarElem
       });
 
-      let params = {
-        offset: store.state.pagination
-      };
+      // Get seach settings
+      let params = search.state;
+      // Add pagination offset
+      params.offset = store.state.pagination;
+
+      console.log("params", params);
 
       api
         .dispatch({

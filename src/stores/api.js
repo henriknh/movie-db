@@ -17,7 +17,7 @@ const store = new Vuex.Store({
 
       // Add optional parameters
       for (let key of Object.keys(data.params)) {
-        url += `${key}=${data.params[key]}&`;
+        if (data.params[key]) url += `${key}=${data.params[key]}&`;
       }
 
       // Add auth token

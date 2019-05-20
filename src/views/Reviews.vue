@@ -2,12 +2,14 @@
   <div class="reviews">
     <Search />
 
-    <Thumb
-      v-for="review in $store.state.reviews"
-      :key="review.id"
-      :id="review.id"
-      :name="review.display_title"
-    />
+    <div class="reviews-list">
+      <Thumb
+        v-for="review in $store.state.reviews"
+        :key="review.id"
+        :id="review.id"
+        :name="review.display_title"
+      />
+    </div>
 
     <Pagination :store="$store" />
   </div>
