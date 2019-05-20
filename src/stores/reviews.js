@@ -7,29 +7,41 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    pagination: 0,
     reviews: []
   },
+  mutations: {
+    prevPagination(state) {
+      state.pagination--;
+    },
+    nextPagination(state) {
+      state.pagination++;
+    }
+  },
   actions: {
-    retrieve: state => {
-      const route = api.getters.route("reviews/search.json");
-      console.log(route);
+    reset: state => {
+      state.pagination = 0;
+      state.reviews = [];
+      store.dispatch("retrieve");
+    },
+    retrieve: () => {
+      const url = api.getters.generateUrl("reviews/search.json", {
+        offset: store.state.pagination
+      });
 
       axios
-        .get(route)
+        .get(url)
         .then(function(response) {
-          store.state.reviews = [];
-
           let reviews = response.data.results;
 
           for (let [i, review] of reviews.entries()) {
-            console.log(i, review);
             // Add an unique id to each review
             review.id = i;
             store.state.reviews.push(review);
           }
         })
         .catch(function(error) {
-          console.log(error);
+          console.error(error);
         });
     }
   }
