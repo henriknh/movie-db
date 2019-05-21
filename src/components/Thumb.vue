@@ -34,7 +34,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/buefy.scss";
+
 .thumb {
+  cursor: pointer;
+
+  :hover {
+    background: $white-bis;
+  }
+
   img {
     max-width: 200px;
     height: 200px;
