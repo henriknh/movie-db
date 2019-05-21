@@ -8,7 +8,7 @@
       >
       </b-icon>
     </div>
-    <div>{{ store.state.pagination + 1 }}</div>
+    <div>{{ store.state.pagination / 20 + 1 }}</div>
     <div @click="$store.commit('nextPagination')">
       <b-icon icon="arrow-right" size="is-small"> </b-icon>
     </div>

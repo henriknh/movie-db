@@ -13,11 +13,12 @@ const store = new Vuex.Store({
   },
   mutations: {
     prevPagination(state) {
-      state.pagination--;
+      state.pagination -= 20;
+      if (state.pagination < 0) state.pagination = 0;
       store.dispatch("retrieve");
     },
     nextPagination(state) {
-      state.pagination++;
+      state.pagination += 20;
       store.dispatch("retrieve");
     }
   },
