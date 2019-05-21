@@ -36,6 +36,12 @@ const store = new Vuex.Store({
 
         typingTimeout = null;
       }, 300);
+    },
+    updateCriticsPick(state, value) {
+      state["critics-pick"] = value;
+      reviews.dispatch("reset", {
+        searchReset: false
+      });
     }
   }
 });

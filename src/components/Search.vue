@@ -4,12 +4,53 @@
       <b-input
         v-model="query"
         placeholder="Search movies..."
+        type="search"
+        icon="magnify"
         size="is-large"
-      ></b-input>
+        expanded
+      />
     </b-field>
 
     <div class="advanced" v-if="showAdvanced">
-      This is advanced stuff
+      <b-field>
+        <b-switch v-model="criticsPick" true-value="Y" false-value="">
+          Critics pick
+        </b-switch>
+      </b-field>
+      <b-field label="Select a date">
+        <b-datepicker
+          placeholder="Type or select a date..."
+          :first-day-of-week="1"
+          icon="calendar-today"
+          editable
+        >
+          <button class="button" @click="date = new Date()">
+            <b-icon icon="calendar-today"></b-icon>
+            <span>Today</span>
+          </button>
+
+          <button class="button" @click="date = null">
+            <b-icon icon="close"></b-icon>
+            <span>Clear</span>
+          </button>
+        </b-datepicker>
+        <b-datepicker
+          placeholder="Type or select a date..."
+          :first-day-of-week="1"
+          icon="calendar-today"
+          editable
+        >
+          <button class="button" @click="date = new Date()">
+            <b-icon icon="calendar-today"></b-icon>
+            <span>Today</span>
+          </button>
+
+          <button class="button" @click="date = null">
+            <b-icon icon="close"></b-icon>
+            <span>Clear</span>
+          </button>
+        </b-datepicker>
+      </b-field>
     </div>
     <div
       class="toggle-advanced has-text-centered has-text-grey is-size-7 is-capitalized is-family-secondary"
@@ -17,8 +58,6 @@
     >
       {{ showAdvancedText }}
     </div>
-
-    <div>{{ $store.state.query }}</div>
   </div>
 </template>
 
@@ -51,6 +90,14 @@ export default {
       set(value) {
         this.$store.commit("updateQuery", value);
       }
+    },
+    criticsPick: {
+      get() {
+        return this.$store.state["critics-pick"];
+      },
+      set(value) {
+        this.$store.commit("updateCriticsPick", value);
+      }
     }
   }
 };
@@ -64,6 +111,10 @@ export default {
 
   .toggle-advanced {
     cursor: pointer;
+  }
+
+  .advanced {
+    padding: ($gap / 2) 0px;
   }
 }
 </style>
