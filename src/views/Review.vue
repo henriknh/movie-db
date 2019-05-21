@@ -1,15 +1,18 @@
 <template>
   <div class="review">
     <div class="title is-spaced">{{ title }}</div>
-    <div class="subtitle">{{ review.headline }}</div>
+    <div class="subtitle">{{ $store.state.selectedReview.headline }}</div>
     <div class="container">
       <div class="columns">
         <img class="column is-on-third" :src="img_src" />
         <div class="column is-two-thirds">
-          <div>{{ review.summary_short }}</div>
+          <div>{{ $store.state.selectedReview.summary_short }}</div>
           <br />
-          <a v-if="review.link" :href="review.link.url">
-            {{ review.link.suggested_link_text }}
+          <a
+            v-if="$store.state.selectedReview.link"
+            :href="$store.state.selectedReview.link.url"
+          >
+            {{ $store.state.selectedReview.link.suggested_link_text }}
           </a>
         </div>
       </div>
@@ -34,38 +37,35 @@ export default {
     };
   },
   mounted() {
-    this.review = this.$store.state.selectedReview;
-
     // Make sure a review is actually set
-    if (!this.review) {
+    if (!this.$store.state.selectedReview) {
       // Redirect to reviews page if review is not set
       this.$router.push({ name: "reviews" });
     }
   },
   computed: {
     title: function() {
-      this.review = this.$store.state.selectedReview;
-      console.log(this);
-      const title = this.review.display_title;
-      const year = new Date(this.review.opening_date).getFullYear();
+      const review = this.$store.state.selectedReview;
+
+      const title = review.display_title;
+      const year = new Date(review.opening_date).getFullYear();
       return `${title} (${year})`;
     },
     img_src: function() {
-      if (this.review.multimedia) {
-        return this.review.multimedia.src;
+      const review = this.$store.state.selectedReview;
+
+      if (review.multimedia) {
+        return review.multimedia.src;
       }
       return null;
     },
     date: function() {
-      const pub_date = this.review.publication_date;
-      const update_date = this.review.date_updated;
+      const review = this.$store.state.selectedReview;
+
+      const pub_date = review.publication_date;
+      const update_date = review.date_updated;
       return update_date ? `${pub_date} (Updated: ${update_date})` : pub_date;
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.review {
-}
-</style>

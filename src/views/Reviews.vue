@@ -38,7 +38,7 @@ export default {
     Thumb,
     Pagination
   },
-  mounted() {
+  created() {
     this.$store.dispatch("reset");
   },
   methods: {
