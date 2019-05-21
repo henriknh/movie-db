@@ -22,12 +22,17 @@ const store = new Vuex.Store({
     nextPagination(state) {
       state.pagination += 20;
       store.dispatch("retrieve");
+    },
+    selectReview(state, review) {
+      state.selectedReview = review;
     }
   },
   actions: {
     reset: (state, options) => {
       state.pagination = 0;
       state.has_more = false;
+      state.selectedReview = null;
+
       if (!options || options.searchReset) search.commit("reset");
       store.dispatch("retrieve");
     },
@@ -41,8 +46,6 @@ const store = new Vuex.Store({
       let params = search.state;
       // Add pagination offset
       params.offset = store.state.pagination;
-
-      console.log("params", params);
 
       api
         .dispatch({

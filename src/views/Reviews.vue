@@ -3,12 +3,15 @@
     <Search />
 
     <div class="reviews-list">
-      <Thumb
+      <!-- Own div because click can not be attached to component -->
+      <div
         v-for="review in $store.state.reviews"
         :key="review.id"
         :id="review.id"
-        :name="review.display_title"
-      />
+        @click="selectReview(review)"
+      >
+        <Thumb :name="review.display_title" />
+      </div>
     </div>
 
     <Pagination :store="$store" />
@@ -31,6 +34,12 @@ export default {
   },
   mounted() {
     this.$store.dispatch("reset");
+  },
+  methods: {
+    selectReview: function(review) {
+      this.$store.commit("selectReview", review);
+      this.$router.push({ name: "review" });
+    }
   }
 };
 </script>

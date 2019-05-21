@@ -3,7 +3,7 @@ import Router from "vue-router";
 
 import Critics from "./views/Critics.vue";
 import Reviews from "./views/Reviews.vue";
-import Review from "./views/Critics.vue";
+import Review from "./views/Review.vue";
 
 Vue.use(Router);
 
@@ -22,7 +22,7 @@ export default new Router({
       component: Critics
     },
     {
-      path: "/review/:id",
+      path: "/review",
       name: "review",
       component: Review
     }
