@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import Critics from "./views/Critics.vue";
 import Reviews from "./views/Reviews.vue";
 import Review from "./views/Review.vue";
+import Critics from "./views/Critics.vue";
+import Critic from "./views/Critic.vue";
 
 Vue.use(Router);
 
@@ -17,14 +18,19 @@ export default new Router({
       component: Reviews
     },
     {
+      path: "/review",
+      name: "review",
+      component: Review
+    },
+    {
       path: "/critics",
       name: "critics",
       component: Critics
     },
     {
-      path: "/review",
-      name: "review",
-      component: Review
+      path: "/critic",
+      name: "critic",
+      component: Critic
     }
   ]
 });
