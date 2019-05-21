@@ -10,7 +10,8 @@
     </div>
     <div>{{ store.state.pagination / 20 + 1 }}</div>
     <div @click="$store.commit('nextPagination')">
-      <b-icon icon="arrow-right" size="is-small"> </b-icon>
+      <b-icon icon="arrow-right" size="is-small" v-if="$store.state.has_more">
+      </b-icon>
     </div>
   </div>
 </template>

@@ -9,7 +9,9 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     pagination: 0,
-    reviews: []
+    has_more: false,
+    reviews: [],
+    selectedReview: null
   },
   mutations: {
     prevPagination(state) {
@@ -25,6 +27,7 @@ const store = new Vuex.Store({
   actions: {
     reset: (state, options) => {
       state.pagination = 0;
+      state.has_more = false;
       if (!options || options.searchReset) search.commit("reset");
       store.dispatch("retrieve");
     },
@@ -49,6 +52,7 @@ const store = new Vuex.Store({
         })
         .then(data => {
           store.state.reviews = [];
+          store.state.has_more = data.has_more;
 
           let reviews = data.results;
 
