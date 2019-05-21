@@ -1,5 +1,5 @@
 <template>
-  <div :href="nav" class="thumb">
+  <div class="thumb">
     <img :src="url" v-if="showThumb" />
     <div>{{ name }}</div>
   </div>
@@ -17,9 +17,6 @@ export default {
     }
   },
   computed: {
-    nav: function() {
-      return `/critic/${this.id}`;
-    },
     url: function() {
       let url =
         "https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg";
