@@ -8,7 +8,7 @@
       >
       </b-icon>
     </div>
-    <div>{{ store.state.pagination / 20 + 1 }}</div>
+    <div class="pagination-number">{{ store.state.pagination / 20 + 1 }}</div>
     <div @click="$store.commit('nextPagination')">
       <b-icon icon="arrow-right" size="is-small" v-if="$store.state.has_more">
       </b-icon>
@@ -32,7 +32,18 @@ export default {
 
   div {
     width: 50px;
-    user-select: none;
+
+    .pagination-number {
+      user-select: none;
+    }
+
+    .icon {
+      cursor: pointer;
+
+      :hover {
+        background: $white-bis;
+      }
+    }
   }
 }
 </style>
