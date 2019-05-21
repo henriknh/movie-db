@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <section class="hero is-link is-fullheight is-medium">
+    <section class="hero is-link is-fullheight">
       <div class="hero-head">
         <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="container">
@@ -47,7 +47,7 @@
           <div class="container">
             <div class="content has-text-centered">
               <p>
-                <strong>Movie Reviews</strong> by
+                <strong>movie-db</strong> by
                 <a href="mailto:henrik.nilsson.harnert@gmail.com"
                   >Henrik Nilsson Harnert</a
                 >. Mini project for interview with Axis Communications.<br />
