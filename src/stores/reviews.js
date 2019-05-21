@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     pagination: 0,
     has_more: false,
     reviews: [],
+    no_search_match: false,
     selectedReview: null
   },
   mutations: {
@@ -29,18 +30,20 @@ const store = new Vuex.Store({
   },
   actions: {
     reset: (state, options) => {
-      state.pagination = 0;
-      state.has_more = false;
-      state.selectedReview = null;
+      store.state.pagination = 0;
+      store.state.has_more = false;
+      store.state.selectedReview = null;
 
       if (!options || options.searchReset) search.commit("reset");
       store.dispatch("retrieve");
     },
     retrieve: () => {
-      const tarElem = document.getElementsByClassName("reviews-list")[0];
+      const tarElem = document.getElementsByClassName("reviews")[0];
       const loadingComponent = Loading.open({
         container: tarElem
       });
+
+      store.state.no_search_match = false;
 
       // Get seach settings
       let params = search.state;
@@ -64,6 +67,10 @@ const store = new Vuex.Store({
             // Make sure id is correct even for page 2+
             review.id = store.state.pagination * 20 + i;
             store.state.reviews.push(review);
+          }
+
+          if (store.state.reviews.length == 0) {
+            store.state.no_search_match = true;
           }
         })
         .catch(error => {

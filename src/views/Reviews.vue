@@ -2,7 +2,13 @@
   <div class="reviews">
     <Search />
 
-    <div class="reviews-list">
+    <div
+      class="title is-size-5 has-text-centered"
+      v-if="$store.state.no_search_match"
+    >
+      No movie reviews matches the filter chosen above
+    </div>
+    <div class="reviews-list" v-else>
       <!-- Own div because click can not be attached to component -->
       <div
         v-for="review in $store.state.reviews"
@@ -12,9 +18,9 @@
       >
         <Thumb :name="review.display_title" />
       </div>
-    </div>
 
-    <Pagination :store="$store" />
+      <Pagination :store="$store" />
+    </div>
   </div>
 </template>
 
