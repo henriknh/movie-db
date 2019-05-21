@@ -26,3 +26,12 @@ npm run test
 ```
 npm run lint
 ```
+
+## Run with Docker
+
+```
+docker build -t henriknh/movie-db .
+docker run -it -p 8080:8080 --rm --name henriknh-movie-db-1 henriknh/movie-db
+```
+
+App should now we accessable at `localhost:8080`
